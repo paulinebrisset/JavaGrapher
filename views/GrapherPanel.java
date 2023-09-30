@@ -229,6 +229,10 @@ public class GrapherPanel extends JPanel {
         this.xyPairs = xyPairs;
     }
 
+    public void unsetxyPairs() {
+        this.xyPairs = null;
+    }
+
     public void setcheckedEval(boolean checkedEval) {
         this.checkedEval = checkedEval;
     }

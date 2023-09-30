@@ -71,4 +71,8 @@ public class EvalPanel extends JPanel {
             }
         }
     }
+
+    public void clearFunction() {
+        txtFunction.setText("");
+    }
 }

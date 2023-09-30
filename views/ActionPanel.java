@@ -20,10 +20,15 @@ public class ActionPanel extends JPanel {
     private JTextField xGridField;
     private JTextField yGridField;
     private JButton refreshButton;
+    private JButton clearButton;
 
     private GrapherPanel grapherPanel;
+    private ActionListener refreshListener;
+    private ActionListener clearListener;
 
-    public ActionPanel(GrapherPanel grapherPanel) {
+    public ActionPanel(GrapherPanel grapherPanel, ActionListener refreshListener, ActionListener clearListener) {
+        this.clearListener = clearListener;
+        this.refreshListener = refreshListener;
         this.setBackground(OptionalSettings.getSecondColor());
         this.setLayout(new GridBagLayout());
         this.grapherPanel = grapherPanel;
@@ -66,9 +71,8 @@ public class ActionPanel extends JPanel {
         refreshButton = new JButton("Refresh");
         refreshButton.setBackground(OptionalSettings.getButtonsColor());
         constraint.gridx = 1;
-        constraint.gridwidth = 2; // Span two columns for the button
+        constraint.gridwidth = 2;
         add(refreshButton, constraint);
-        // FIXME
         // Add action listener to the refresh button
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -76,9 +80,32 @@ public class ActionPanel extends JPanel {
                 refreshGrapherPanel();
             }
         });
+
+        // Create the clear button
+        clearButton = new JButton("Clear");
+        clearButton.setBackground(OptionalSettings.getButtonsColor());
+        constraint.gridx = 1; // Reset gridx to 0 to place in the first column
+        constraint.gridy++; // Move to the next row
+        constraint.gridwidth = 2;
+        add(clearButton, constraint);
+        // Add action listener to the refresh button
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionClearGrapherPanel();
+            }
+        });
+    }
+
+    // Listener for click on submit
+    public void actionClearGrapherPanel() {
+        if (clearListener != null) {
+            clearListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Clear"));
+        }
     }
 
     private void refreshGrapherPanel() {
+        // TODO déménager tout le monde dans GrapherPanel
         // Get the values from the text fields and update the GrapherPanel
         try {
             float xmin = xminField.getText().isEmpty() ? grapherPanel.getMinX() : Float.parseFloat(xminField.getText());
@@ -96,6 +123,7 @@ public class ActionPanel extends JPanel {
             grapherPanel.setStep(step);
             grapherPanel.setGridX(xGrid);
             grapherPanel.setGridY(yGrid);
+            // todo faire un recompute de la méthode et passer par GUI
             grapherPanel.repaint(); // Redraw the GrapherPanel
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter numeric values.", "Error",
@@ -130,9 +158,5 @@ public class ActionPanel extends JPanel {
 
     public JTextField getYGridField() {
         return yGridField;
-    }
-
-    public JButton getRefreshButton() {
-        return refreshButton;
     }
 }

@@ -23,12 +23,29 @@ public class GuiGrapher extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1, 2));
+        ActionListener refreshListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                if ("Refresh".equals(e.getActionCommand())) {
+                    handleBtnSubmitClick();
+                }
+            }
+        };
+        ActionListener clearListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if ("Clear".equals(e.getActionCommand())) {
+                    handleBtnClearClick();
+                }
+            }
+        };
         // Initialization of elements:
         grapherPanel = new GrapherPanel();
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
         positionPanel = new PositionPanel(graphMouse);
-        actionPanel = new ActionPanel(grapherPanel);
+        actionPanel = new ActionPanel(grapherPanel, refreshListener, clearListener);
 
         // Create an ActionListener for the "Submit" button
         ActionListener submitListener = new ActionListener() {
@@ -55,6 +72,14 @@ public class GuiGrapher extends JFrame {
         content.add(grapherPanel, BorderLayout.CENTER);
         content.add(evalPanel, BorderLayout.SOUTH);
         this.setVisible(true);
+    }
+
+    public void handleBtnClearClick() {
+        this.grapherPanel.setcheckedEval(false);
+        // TODO Fix it still display f(x)
+        this.grapherPanel.unsetxyPairs();
+        this.grapherPanel.repaint();
+        this.evalPanel.clearFunction();
     }
 
     public void handleBtnSubmitClick() {
