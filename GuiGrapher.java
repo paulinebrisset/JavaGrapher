@@ -12,7 +12,7 @@ public class GuiGrapher extends JFrame {
 
     public GuiGrapher() {
         this.setTitle("Grapher");
-        this.setSize(800, 600);
+        this.setSize(1200, 600);
         // Display it in the middle of the screen
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +24,7 @@ public class GuiGrapher extends JFrame {
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
         positionPanel = new PositionPanel(OptionalSettings.getMainColor(), grapherPanel, graphMouse);
 
-        // actionPanel = new ActionPanel(grapher, mainColor);
+        actionPanel = new ActionPanel(grapherPanel, OptionalSettings.getSecondColor());
         // grapher.setActionPanel(actionPanel);
         // evalPanel = new EvalPanel(grapherPanel, mainColor);
         mainPanel = new JPanel();
@@ -33,6 +33,7 @@ public class GuiGrapher extends JFrame {
         content.setLayout(new BorderLayout());
         content.add(mainPanel, BorderLayout.EAST);
         content.add(positionPanel, BorderLayout.NORTH);
+        content.add(actionPanel, BorderLayout.WEST);
         content.add(grapherPanel, BorderLayout.CENTER);
 
         this.setVisible(true);

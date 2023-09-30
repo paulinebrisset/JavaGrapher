@@ -1,8 +1,6 @@
 package Panels;
 
 import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import javax.swing.JPanel;
 
 /**
@@ -15,7 +13,7 @@ public class GrapherPanel extends JPanel {
     protected float maxX = 10;
     protected float minY = -10;
     protected float maxY = 10;
-    protected float pas = 0.01f;
+    protected float step = 0.01f;
     protected float rangeX = 0;
     protected float rangeY = 0;
     protected float Ox = 0;
@@ -23,25 +21,21 @@ public class GrapherPanel extends JPanel {
     protected float gridX = 1.0f;
     protected float gridY = 1.0f;
 
-    protected boolean auto_pas = false;
+    protected boolean auto_step = false;
     protected boolean drag = false;
     boolean evalIsOk1 = false;
-    boolean evalIsOk2 = false;
 
     protected ActionPanel actionPanel;
 
-    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
     // Adjust coordinates
     public Point adjustMousePosition(Point mousePosition) {
-        int adjustedX = (int) ((mousePosition.getX() - Ox) / (gridX * pas));
-        System.out.println(adjustedX);
-        int adjustedY = (int) ((Oy - mousePosition.getY()) / (gridY * pas));
+        int adjustedX = (int) ((mousePosition.getX() - Ox) / (gridX * step));
+        int adjustedY = (int) ((Oy - mousePosition.getY()) / (gridY * step));
         return new Point(adjustedX, adjustedY);
     }
 
     public void paint(Graphics g) {
-        /* Relation between graphi size and screen size */
+        /* Relation between graphic size and screen size */
         if (!drag) {
             int w = getSize().width;
             rangeX = (maxX - minX) / w;
@@ -53,17 +47,10 @@ public class GrapherPanel extends JPanel {
         Ox = -minX / rangeX;
         Oy = maxY / rangeY;
 
-        // ** DESSIN DES AXES ET DE LA FONCTION
+        // Draw axis
         drawAxes(g);
         // if (evalIsOk1)
         // drawFonc(g, evaluateur1, fct_color1);
-        // if (evalIsOk2)
-        // drawFonc(g, evaluateur2, fct_color2);
-    }
-
-    // Add a property change listener
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
     // Dessine les axes du repère
@@ -107,6 +94,61 @@ public class GrapherPanel extends JPanel {
             y += gridY;
         }
     }
+
+    // GETTERS
+    public float getMaxY() {
+        return maxY;
+    }
+
+    public float getMinY() {
+        return minY;
+    }
+
+    public float getMaxX() {
+        return maxX;
+    }
+
+    public float getMinX() {
+        return minX;
+    }
+
+    public float getStep() {
+        return step;
+    }
+
+    public float getGridX() {
+        return gridX;
+    }
+
+    public float getGridY() {
+        return gridY;
+    }
+
+    // SETTERS
+    public void setMinMaxX(float xmin, float xmax) {
+        this.minX = xmin;
+        this.maxX = xmax;
+    }
+
+    public void setMinMaxY(float ymin, float ymax) {
+        this.minY = ymin;
+        this.maxY = ymax;
+    }
+
+    // Method to set the step value (step)
+    public void setStep(float step) {
+        this.step = step;
+    }
+
+    // Method to set the grid spacing on the x-axis
+    public void setGridX(float xGrid) {
+        this.gridX = xGrid;
+    }
+
+    // Method to set the grid spacing on the y-axis
+    public void setGridY(float yGrid) {
+        this.gridY = yGrid;
+    }
     // public void refresh() {
 
     // this.minX = Float.valueOf(actionPanel.txt_x_min.getText());
@@ -115,9 +157,9 @@ public class GrapherPanel extends JPanel {
     // this.maxY = Float.valueOf(actionPanel.txt_y_max.getText());
     // this.gridX = Float.valueOf(actionPanel.txt_x_grid.getText());
     // this.gridY = Float.valueOf(actionPanel.txt_y_grid.getText());
-    // this.pas = Float.valueOf(actionPanel.txt_pas.getText());
-    // this.auto_pas = false;
-    // this.actionPanel.check_auto_pas.setSelected(false);
+    // this.step = Float.valueOf(actionPanel.txt_step.getText());
+    // this.auto_step = false;
+    // this.actionPanel.check_auto_step.setSelected(false);
 
     // repaint();
     // }

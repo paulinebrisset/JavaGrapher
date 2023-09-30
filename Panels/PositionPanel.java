@@ -45,6 +45,7 @@ public class PositionPanel extends JPanel {
         });
     }
 
+    // SETTERS
     public void setX(float x) {
         this.x.setText(String.valueOf(x));
     }
