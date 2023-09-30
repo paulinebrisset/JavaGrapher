@@ -7,12 +7,13 @@ import java.beans.PropertyChangeSupport;
 
 public class GraphMouse extends MouseAdapter {
     // Raw mouse position (without grid adjustments)
-    public int rawMouseX = 0;
-    public int rawMouseY = 0;
+    public float rawMouseX = 0;
+    public float rawMouseY = 0;
 
     // Mouse position taking the grid into account
-    public int mouseX = 0;
-    public int mouseY = 0;
+    public float mouseX = 0;
+    public float mouseY = 0;
+    public float mouseFx = 0;
 
     // Reference to the GrapherPanel
     protected GrapherPanel grapherPanel;
@@ -33,15 +34,22 @@ public class GraphMouse extends MouseAdapter {
         // Capture the untreated mouse coordinates
         rawMouseX = e.getX();
         rawMouseY = e.getY();
-
         // Take the grid into account
-        Point updatedPoint = grapherPanel.adjustMousePosition(new Point((int) rawMouseX, (int) rawMouseY));
-        mouseX = (int) updatedPoint.getX();
-        mouseY = (int) updatedPoint.getY();
+        float[] updatedPosition = grapherPanel.adjustMousePosition((float) rawMouseX, (float) rawMouseY);
+        float mouseX = updatedPosition[0];
+        float mouseY = updatedPosition[1];
 
         // Notify property change listeners
         propertyChangeSupport.firePropertyChange("mouseX", null, mouseX);
         propertyChangeSupport.firePropertyChange("mouseY", null, mouseY);
+        boolean isData = grapherPanel.isData();
+        if (isData) {
+            mouseFx = grapherPanel.getFxForX(mouseX);
+            if (!Float.isNaN(mouseFx)) {
+                propertyChangeSupport.firePropertyChange("mouseFx", null, mouseFx);
+            }
+        }
+
     }
 
     // Add a property change listener to this instance

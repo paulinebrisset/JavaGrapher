@@ -43,9 +43,11 @@ public class PositionPanel extends JPanel {
         graphMouse.addPropertyChangeListener(evt -> {
             // Update x and y based on mouseX and mouseY
             if ("mouseX".equals(evt.getPropertyName())) {
-                setX((int) evt.getNewValue());
+                setX((float) evt.getNewValue());
             } else if ("mouseY".equals(evt.getPropertyName())) {
-                setY((int) evt.getNewValue());
+                setY((float) evt.getNewValue());
+            } else if ("mouseFx".equals(evt.getPropertyName())) {
+                setFX((float) evt.getNewValue());
             }
         });
     }
@@ -54,17 +56,17 @@ public class PositionPanel extends JPanel {
     private JTextField createFormattedTextField() {
         JTextField textField = new JTextField("");
         textField.setEditable(false);
-        textField.setPreferredSize(new Dimension(60, 24));
+        textField.setPreferredSize(new Dimension(80, 24));
         textField.setBackground(OptionalSettings.getLabelForegroundColor());
         return textField;
     }
 
     // SETTERS
-    public void setX(int x) {
+    public void setX(float x) {
         xTextField.setText(String.valueOf(x));
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         yTextField.setText(String.valueOf(y));
     }
 

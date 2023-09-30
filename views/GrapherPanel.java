@@ -17,7 +17,8 @@ public class GrapherPanel extends JPanel {
     protected float maxX = 10;
     protected float minY = -10;
     protected float maxY = 10;
-    protected float step = 0.01f;
+    protected float step = 0.05f;
+    // protected float step = 0.01f;
     protected float rangeX = 0;
     protected float rangeY = 0;
     protected float Ox = 0;
@@ -30,13 +31,6 @@ public class GrapherPanel extends JPanel {
     boolean checkedEval = false;
     private Map<Float, Float> xyPairs;
     protected ActionPanel actionPanel;
-
-    // Adjust coordinates
-    public Point adjustMousePosition(Point mousePosition) {
-        int adjustedX = (int) ((mousePosition.getX() - Ox) / (gridX * step));
-        int adjustedY = (int) ((Oy - mousePosition.getY()) / (gridY * step));
-        return new Point(adjustedX, adjustedY);
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -149,6 +143,37 @@ public class GrapherPanel extends JPanel {
     }
 
     // GETTERS
+    // Adjust coordinates
+    public float[] adjustMousePosition(float mouseX, float mouseY) {
+        float adjustedX = (mouseX - getWidth() / 2f) * (maxX - minX) / getWidth() + (maxX + minX) / 2f;
+        float adjustedY = (getHeight() / 2f - mouseY) * (maxY - minY) / getHeight() + (maxY + minY) / 2f;
+        adjustedX = roundToNearestStep(adjustedX);
+        adjustedY = roundToNearestStep(adjustedY);
+        return new float[] { adjustedX, adjustedY };
+    }
+
+    public boolean isData() {
+        return xyPairs != null && !xyPairs.isEmpty();
+    }
+
+    public Float getFxForX(float x) {
+        if (isData()) {
+            float tolerance = step; // Adjust this tolerance based on your step size
+            for (Map.Entry<Float, Float> entry : xyPairs.entrySet()) {
+                float key = entry.getKey();
+                if (Math.abs(key - x) < tolerance) {
+                    return entry.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    // Round x to the nearest step value
+    private float roundToNearestStep(float x) {
+        return Math.round(x / step) * step;
+    }
+
     public float getMaxY() {
         return maxY;
     }
