@@ -72,6 +72,11 @@ public class EvalPanel extends JPanel {
         }
     }
 
+    public String getExpression() {
+        String expression = this.txtFunction.getText();
+        return expression;
+    }
+
     public void clearFunction() {
         txtFunction.setText("");
     }

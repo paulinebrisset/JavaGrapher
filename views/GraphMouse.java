@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.Point;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

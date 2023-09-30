@@ -83,20 +83,54 @@ public class GuiGrapher extends JFrame {
     }
 
     public void handleBtnSubmitClick() {
-        float minX = this.grapherPanel.getMinX();
-        float maxX = this.grapherPanel.getMaxX();
-        float step = this.grapherPanel.getStep();
+        String expression = this.evalPanel.getExpression();
 
-        // Create a Map to store the x-y pairs
-        Map<Float, Float> xyPairs = new HashMap<>();
-        // Loop through the range of X values and evaluate the function for each X
-        for (float currentX = minX; currentX <= maxX; currentX += step) {
-            float y = EvaluatorProvisoire.randonFunctionResult(currentX);
-            xyPairs.put(currentX, y); // Store the x-y pair in the Map
+        try {
+            String xminStr = actionPanel.getXminField();
+            String xmaxStr = actionPanel.getXmaxField();
+            String yminStr = actionPanel.getYminField();
+            String ymaxStr = actionPanel.getYmaxField();
+            String stepStr = actionPanel.getStepField();
+            String xGridStr = actionPanel.getXGridField();
+            String yGridStr = actionPanel.getYGridField();
+
+            float xmin = xminStr.isEmpty() ? grapherPanel.getMinX() : Float.parseFloat(xminStr);
+            float xmax = xmaxStr.isEmpty() ? grapherPanel.getMaxX() : Float.parseFloat(xmaxStr);
+            float ymin = yminStr.isEmpty() ? grapherPanel.getMinY() : Float.parseFloat(yminStr);
+            float ymax = ymaxStr.isEmpty() ? grapherPanel.getMaxY() : Float.parseFloat(ymaxStr);
+            float step = stepStr.isEmpty() ? grapherPanel.getStep() : Float.parseFloat(stepStr);
+            float xGrid = xGridStr.isEmpty() ? grapherPanel.getGridX() : Float.parseFloat(xGridStr);
+            float yGrid = yGridStr.isEmpty() ? grapherPanel.getGridY() : Float.parseFloat(yGridStr);
+
+            grapherPanel.setMinMaxX(xmin, xmax);
+            grapherPanel.setMinMaxY(ymin, ymax);
+            grapherPanel.setStep(step);
+            grapherPanel.setGridX(xGrid);
+            grapherPanel.setGridY(yGrid);
+            // todo faire un recompute de la méthode et passer par GUI
+            grapherPanel.repaint(); // Redraw the GrapherPanel
+            // Apply expression is exists
+            if (!expression.isEmpty()) {
+                // Create a Map to store the x-y pairs
+                Map<Float, Float> xyPairs = new HashMap<>();
+                // Loop through the range of X values and evaluate the function for each X
+                for (float currentX = xmin; currentX <= xmax; currentX += step) {
+                    float y = EvaluatorProvisoire.randomFunctionResult(expression, currentX);
+                    xyPairs.put(currentX, y); // Store the x-y pair in the Map
+                }
+                this.grapherPanel.setcheckedEval(true);
+                this.grapherPanel.setxyPairs(xyPairs);
+                this.grapherPanel.repaint();
+            } else {
+                this.grapherPanel.setcheckedEval(false);
+                this.grapherPanel.unsetxyPairs();
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input. Please enter numeric values.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        this.grapherPanel.setcheckedEval(true);
-        this.grapherPanel.setxyPairs(xyPairs);
-        this.grapherPanel.repaint();
+
     }
 
     public static void main(String[] args) {

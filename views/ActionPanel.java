@@ -23,12 +23,10 @@ public class ActionPanel extends JPanel {
     private JButton clearButton;
 
     private GrapherPanel grapherPanel;
-    private ActionListener refreshListener;
     private ActionListener clearListener;
 
     public ActionPanel(GrapherPanel grapherPanel, ActionListener refreshListener, ActionListener clearListener) {
         this.clearListener = clearListener;
-        this.refreshListener = refreshListener;
         this.setBackground(OptionalSettings.getSecondColor());
         this.setLayout(new GridBagLayout());
         this.grapherPanel = grapherPanel;
@@ -132,31 +130,31 @@ public class ActionPanel extends JPanel {
     }
 
     // Getters
-    public JTextField getXminField() {
-        return xminField;
+    public String getXminField() {
+        return xminField.getText();
     }
 
-    public JTextField getXmaxField() {
-        return xmaxField;
+    public String getXmaxField() {
+        return xmaxField.getText();
     }
 
-    public JTextField getYminField() {
-        return yminField;
+    public String getYminField() {
+        return yminField.getText();
     }
 
-    public JTextField getYmaxField() {
-        return ymaxField;
+    public String getYmaxField() {
+        return ymaxField.getText();
     }
 
-    public JTextField getStepField() {
-        return stepField;
+    public String getStepField() {
+        return stepField.getText();
     }
 
-    public JTextField getXGridField() {
-        return xGridField;
+    public String getXGridField() {
+        return xGridField.getText();
     }
 
-    public JTextField getYGridField() {
-        return yGridField;
+    public String getYGridField() {
+        return yGridField.getText();
     }
 }
