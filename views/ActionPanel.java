@@ -1,8 +1,8 @@
-package Panels;
+package views;
 
 import javax.swing.*;
 
-import Settings.OptionalSettings;
+import settings.OptionalSettings;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -101,5 +101,38 @@ public class ActionPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter numeric values.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // Getters
+    public JTextField getXminField() {
+        return xminField;
+    }
+
+    public JTextField getXmaxField() {
+        return xmaxField;
+    }
+
+    public JTextField getYminField() {
+        return yminField;
+    }
+
+    public JTextField getYmaxField() {
+        return ymaxField;
+    }
+
+    public JTextField getStepField() {
+        return stepField;
+    }
+
+    public JTextField getXGridField() {
+        return xGridField;
+    }
+
+    public JTextField getYGridField() {
+        return yGridField;
+    }
+
+    public JButton getRefreshButton() {
+        return refreshButton;
     }
 }

@@ -1,4 +1,4 @@
-package Settings;
+package settings;
 
 import java.awt.Color;
 
@@ -17,7 +17,7 @@ public class OptionalSettings {
         mainColor = Color.decode("#D1CFFC");
         secondColor = Color.decode("#fcdedc");
         thirdColor = Color.decode("#ffffff");
-        fourthColor = Color.decode("#FCC6C2");
+        fourthColor = Color.decode("#FCFADF");
         labelForgroundColor = Color.decode("#FCF3C2");
     }
 

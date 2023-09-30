@@ -1,8 +1,13 @@
 import javax.swing.*;
-import Panels.*;
-import Settings.OptionalSettings;
 
+import Eval.*;
+import settings.OptionalSettings;
+import views.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuiGrapher extends JFrame {
     protected JPanel rightPanel;
@@ -19,17 +24,28 @@ public class GuiGrapher extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1, 2));
 
-        // Initialisation des éléments :
-
+        // Initialization of elements:
         grapherPanel = new GrapherPanel();
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
         positionPanel = new PositionPanel(graphMouse);
         actionPanel = new ActionPanel(grapherPanel);
-        evalPanel = new EvalPanel();
+
+        // Create an ActionListener for the "Submit" button
+        ActionListener submitListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if ("Submit".equals(e.getActionCommand())) {
+                    handleBtnSubmitClick();
+                }
+            }
+        };
+
+        evalPanel = new EvalPanel(submitListener); // Pass the submitListener to EvalPanel
         rightPanel = new JPanel();
         rightPanel.setBackground(OptionalSettings.getSecondColor());
 
-        // Build whole panel
+        // Build the whole panel
         Container content = this.getContentPane();
         content.setBackground(OptionalSettings.getLabelForegroundColor());
         content.setLayout(new BorderLayout());
@@ -38,11 +54,31 @@ public class GuiGrapher extends JFrame {
         content.add(actionPanel, BorderLayout.WEST);
         content.add(grapherPanel, BorderLayout.CENTER);
         content.add(evalPanel, BorderLayout.SOUTH);
-
         this.setVisible(true);
     }
 
+    public void handleBtnSubmitClick() {
+        float minX = this.grapherPanel.getMinX();
+        float maxX = this.grapherPanel.getMaxX();
+        float step = this.grapherPanel.getStep();
+
+        // Create a Map to store the x-y pairs
+        Map<Float, Float> xyPairs = new HashMap<>();
+        // Loop through the range of X values and evaluate the function for each X
+        for (float currentX = minX; currentX <= maxX; currentX += step) {
+            float y = EvaluatorProvisoire.randonFunctionResult(currentX);
+            xyPairs.put(currentX, y); // Store the x-y pair in the Map
+        }
+        this.grapherPanel.setcheckedEval(true);
+        this.grapherPanel.setxyPairs(xyPairs);
+        this.grapherPanel.repaint();
+    }
+
     public static void main(String[] args) {
-        new GuiGrapher();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new GuiGrapher();
+            }
+        });
     }
 }

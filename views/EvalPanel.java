@@ -1,4 +1,6 @@
-package Panels;
+package views;
+
+import settings.OptionalSettings;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,28 +8,26 @@ import javax.swing.*;
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
 
-import Settings.OptionalSettings;
-
 /**
  * Panel for the user to specify the functions he wants to display
  */
 public class EvalPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
+    private JButton btnSubmit;
+    private JTextField txtFunction;
+    private ActionListener submitListener;
 
-    protected JButton btnSubmit;
-    protected JTextField txtFunction;
-
-    public EvalPanel() {
+    public EvalPanel(ActionListener submitListener) {
+        this.submitListener = submitListener;
         this.setBackground(OptionalSettings.getMainColor());
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         btnSubmit = new JButton("Submit");
         txtFunction = new JTextField();
 
-        JPanel fonctions_input = new JPanel();
-        fonctions_input.setLayout(new GridBagLayout());
-        fonctions_input.setBackground(OptionalSettings.getMainColor());
+        JPanel inputFunction = new JPanel();
+        inputFunction.setLayout(new GridBagLayout());
+        inputFunction.setBackground(OptionalSettings.getMainColor());
         GridBagConstraints constraint = new GridBagConstraints();
 
         btnSubmit.setBackground(OptionalSettings.getButtonsColor());
@@ -40,33 +40,35 @@ public class EvalPanel extends JPanel {
         constraint.gridx = 0;
         constraint.gridy = 0;
 
-        // Add the label "f(x) =" to fonctions_input before the JTextField
+        // Add the label "f(x) =" to inputFunction before the JTextField
         JLabel label = new JLabel("f(x) = ");
-        fonctions_input.add(label, constraint);
+        inputFunction.add(label, constraint);
 
         constraint.gridx = 1;
-        fonctions_input.add(txtFunction, constraint);
+        inputFunction.add(txtFunction, constraint);
 
-        this.add(fonctions_input);
+        this.add(inputFunction);
         this.add(btnSubmit);
 
-        ActionListener action_listener = new ActionListener() {
+        ActionListener submitClick = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSubmit)
                     actionBtnSubmit();
             }
         };
 
-        btnSubmit.addActionListener(action_listener);
+        btnSubmit.addActionListener(submitClick);
 
     }
 
-    // Fonction appelée quand on appui sur le bouton éval
+    // Listener for click on submit
     public void actionBtnSubmit() {
         String expression = this.txtFunction.getText();
-
         if (!expression.isEmpty()) {
-            System.out.println(expression);
+            if (submitListener != null) {
+                submitListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Submit"));
+            }
         }
     }
 }

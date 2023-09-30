@@ -1,10 +1,11 @@
-package Panels;
+package views;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import Settings.OptionalSettings;
+import settings.OptionalSettings;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 

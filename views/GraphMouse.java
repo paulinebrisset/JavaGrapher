@@ -1,4 +1,4 @@
-package Panels;
+package views;
 
 import java.awt.Point;
 import java.awt.event.*;
