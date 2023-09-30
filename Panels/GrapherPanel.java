@@ -21,9 +21,9 @@ public class GrapherPanel extends JPanel {
     protected float gridX = 1.0f;
     protected float gridY = 1.0f;
 
-    protected boolean auto_step = false;
+    protected boolean autoStep = false;
     protected boolean drag = false;
-    boolean evalIsOk1 = false;
+    boolean checkedEval = false;
 
     protected ActionPanel actionPanel;
 
@@ -43,54 +43,54 @@ public class GrapherPanel extends JPanel {
             rangeY = (maxY - minY) / h;
         }
 
-        // Initialisation de l'origine du repère
+        // Initialization of the origin of the coordinate system
         Ox = -minX / rangeX;
         Oy = maxY / rangeY;
 
         // Draw axis
         drawAxes(g);
-        // if (evalIsOk1)
+        // if (checkedEval)
         // drawFonc(g, evaluateur1, fct_color1);
     }
 
-    // Dessine les axes du repère
+    // DRaw axis
     public void drawAxes(Graphics g) {
 
-        int taille = 5;
-        float taille_axes = (getSize().height / rangeX) + Ox;
+        int size = 5;
+        float sizeAxis = (getSize().height / rangeX) + Ox;
 
-        // Dessin des axes x et y
-        g.drawLine(Math.round(-taille_axes), Math.round(Oy), Math.round(taille_axes), Math.round(Oy));
-        g.drawLine(Math.round(Ox), Math.round(taille_axes), Math.round(Ox), Math.round(-taille_axes));
+        // Axis
+        g.drawLine(Math.round(-sizeAxis), Math.round(Oy), Math.round(sizeAxis), Math.round(Oy));
+        g.drawLine(Math.round(Ox), Math.round(sizeAxis), Math.round(Ox), Math.round(-sizeAxis));
 
-        // Dessin des graduations
-        // x droite
+        // Graduations
+        // right x
         for (float x = gridX; x < maxX;) {
             float xi = (x / rangeX) + Ox;
             float yi = Oy;
-            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi), Math.round(yi) - taille);
+            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi), Math.round(yi) - size);
             x += gridX;
         }
-        // x gauche
+        // left x
         for (float x = -gridX; x > minX;) {
             float xi = (x / rangeX) + Ox;
             float yi = Oy;
-            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi), Math.round(yi) - taille);
+            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi), Math.round(yi) - size);
             x -= gridX;
         }
 
-        // y bas
+        // bottom y
         for (float y = -gridY; y > minY;) {
             float yi = -(y / rangeY) + Oy;
             float xi = Ox;
-            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi) + taille, Math.round(yi));
+            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi) + size, Math.round(yi));
             y -= gridY;
         }
-        // y haut
+        // upper y
         for (float y = gridY; y < maxY;) {
             float yi = -(y / rangeY) + Oy;
             float xi = Ox;
-            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi) + taille, Math.round(yi));
+            g.drawLine(Math.round(xi), Math.round(yi), Math.round(xi) + size, Math.round(yi));
             y += gridY;
         }
     }
@@ -135,32 +135,15 @@ public class GrapherPanel extends JPanel {
         this.maxY = ymax;
     }
 
-    // Method to set the step value (step)
     public void setStep(float step) {
         this.step = step;
     }
 
-    // Method to set the grid spacing on the x-axis
     public void setGridX(float xGrid) {
         this.gridX = xGrid;
     }
 
-    // Method to set the grid spacing on the y-axis
     public void setGridY(float yGrid) {
         this.gridY = yGrid;
     }
-    // public void refresh() {
-
-    // this.minX = Float.valueOf(actionPanel.txt_x_min.getText());
-    // this.maxX = Float.valueOf(actionPanel.txt_x_max.getText());
-    // this.minY = Float.valueOf(actionPanel.txt_y_min.getText());
-    // this.maxY = Float.valueOf(actionPanel.txt_y_max.getText());
-    // this.gridX = Float.valueOf(actionPanel.txt_x_grid.getText());
-    // this.gridY = Float.valueOf(actionPanel.txt_y_grid.getText());
-    // this.step = Float.valueOf(actionPanel.txt_step.getText());
-    // this.auto_step = false;
-    // this.actionPanel.check_auto_step.setSelected(false);
-
-    // repaint();
-    // }
 }

@@ -1,10 +1,11 @@
 import javax.swing.*;
 import Panels.*;
-import Settings.*;
+import Settings.OptionalSettings;
+
 import java.awt.*;
 
 public class GuiGrapher extends JFrame {
-    protected JPanel mainPanel;
+    protected JPanel rightPanel;
     protected PositionPanel positionPanel;
     protected ActionPanel actionPanel;
     protected EvalPanel evalPanel;
@@ -12,7 +13,7 @@ public class GuiGrapher extends JFrame {
 
     public GuiGrapher() {
         this.setTitle("Grapher");
-        this.setSize(1200, 600);
+        this.setSize(1200, 700);
         // Display it in the middle of the screen
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,19 +23,21 @@ public class GuiGrapher extends JFrame {
 
         grapherPanel = new GrapherPanel();
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
-        positionPanel = new PositionPanel(OptionalSettings.getMainColor(), grapherPanel, graphMouse);
+        positionPanel = new PositionPanel(grapherPanel, graphMouse);
+        actionPanel = new ActionPanel(grapherPanel);
+        evalPanel = new EvalPanel();
+        rightPanel = new JPanel();
+        rightPanel.setBackground(OptionalSettings.getSecondColor());
 
-        actionPanel = new ActionPanel(grapherPanel, OptionalSettings.getSecondColor());
-        // grapher.setActionPanel(actionPanel);
-        // evalPanel = new EvalPanel(grapherPanel, mainColor);
-        mainPanel = new JPanel();
         // Build whole panel
         Container content = this.getContentPane();
+        content.setBackground(OptionalSettings.getLabelForegroundColor());
         content.setLayout(new BorderLayout());
-        content.add(mainPanel, BorderLayout.EAST);
+        content.add(rightPanel, BorderLayout.EAST);
         content.add(positionPanel, BorderLayout.NORTH);
         content.add(actionPanel, BorderLayout.WEST);
         content.add(grapherPanel, BorderLayout.CENTER);
+        content.add(evalPanel, BorderLayout.SOUTH);
 
         this.setVisible(true);
     }

@@ -1,6 +1,9 @@
 package Panels;
 
 import javax.swing.*;
+
+import Settings.OptionalSettings;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +23,8 @@ public class ActionPanel extends JPanel {
 
     private GrapherPanel grapherPanel;
 
-    public ActionPanel(GrapherPanel grapherPanel, Color backgroundColor) {
-        this.setBackground(backgroundColor);
+    public ActionPanel(GrapherPanel grapherPanel) {
+        this.setBackground(OptionalSettings.getSecondColor());
         this.setLayout(new GridBagLayout());
         this.grapherPanel = grapherPanel;
 
@@ -50,6 +53,8 @@ public class ActionPanel extends JPanel {
 
             constraint.gridx = 1;
             textFields[i].setPreferredSize(new Dimension(100, 20)); // Set preferred size with a lower height
+            textFields[i].setBackground(OptionalSettings.getLabelForegroundColor());
+
             add(textFields[i], constraint);
 
             constraint.gridx = 0;
@@ -58,6 +63,7 @@ public class ActionPanel extends JPanel {
 
         // Create the refresh button
         refreshButton = new JButton("Refresh");
+        refreshButton.setBackground(OptionalSettings.getButtonsColor());
         constraint.gridx = 1;
         constraint.gridwidth = 2; // Span two columns for the button
         add(refreshButton, constraint);

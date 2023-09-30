@@ -3,7 +3,8 @@ package Panels;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Color;
+
+import Settings.OptionalSettings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -12,28 +13,35 @@ import java.awt.FlowLayout;
  */
 public class PositionPanel extends JPanel {
 
-    protected JTextField x = new JTextField("");
-    protected JTextField y = new JTextField("");
-    protected JTextField fx = new JTextField("");
-    protected GrapherPanel grapherPanel;
-    protected GraphMouse graphMouse;
+    private final JTextField xTextField;
+    private final JTextField yTextField;
+    private final JTextField fxTextField;
+    private final GrapherPanel grapherPanel;
+    private final GraphMouse graphMouse;
 
-    public PositionPanel(Color backgroundColor, GrapherPanel grapherPanel, GraphMouse graphMouse) {
-        // Initialisation
-        this.setBackground(backgroundColor);
+    public PositionPanel(GrapherPanel grapherPanel, GraphMouse graphMouse) {
+        this.grapherPanel = grapherPanel;
+        this.graphMouse = graphMouse;
+        // Initialize panel
+        this.setBackground(OptionalSettings.getMainColor());
         this.setLayout(new FlowLayout());
+
+        // 'x'
         this.add(new JLabel("x = "));
-        x.setEditable(false);
-        x.setPreferredSize(new Dimension(60, 24));
-        this.add(x);
+
+        xTextField = createFormattedTextField();
+        this.add(xTextField);
+
+        // 'y'
         this.add(new JLabel("y = "));
-        y.setEditable(false);
-        y.setPreferredSize(new Dimension(60, 24));
-        this.add(y);
+        yTextField = createFormattedTextField();
+        this.add(yTextField);
+
+        // 'f(x)'
         this.add(new JLabel("f(x) = "));
-        fx.setEditable(false);
-        fx.setPreferredSize(new Dimension(60, 24));
-        this.add(fx);
+        fxTextField = createFormattedTextField();
+        this.add(fxTextField);
+
         // Add a property change listener to track mouse position on GrapherPanel
         graphMouse.addPropertyChangeListener(evt -> {
             // Update x and y based on mouseX and mouseY
@@ -45,16 +53,25 @@ public class PositionPanel extends JPanel {
         });
     }
 
+    // Helper method to create and configure text fields
+    private JTextField createFormattedTextField() {
+        JTextField textField = new JTextField("");
+        textField.setEditable(false);
+        textField.setPreferredSize(new Dimension(60, 24));
+        textField.setBackground(OptionalSettings.getLabelForegroundColor());
+        return textField;
+    }
+
     // SETTERS
-    public void setX(float x) {
-        this.x.setText(String.valueOf(x));
+    public void setX(int x) {
+        xTextField.setText(String.valueOf(x));
     }
 
-    public void setY(float y) {
-        this.y.setText(String.valueOf(y));
+    public void setY(int y) {
+        yTextField.setText(String.valueOf(y));
     }
 
-    public void setFX1(float fx) {
-        this.fx.setText(String.valueOf(fx));
+    public void setFX(float fx) {
+        fxTextField.setText(String.valueOf(fx));
     }
 }
