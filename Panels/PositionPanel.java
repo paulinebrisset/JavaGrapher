@@ -16,12 +16,8 @@ public class PositionPanel extends JPanel {
     private final JTextField xTextField;
     private final JTextField yTextField;
     private final JTextField fxTextField;
-    private final GrapherPanel grapherPanel;
-    private final GraphMouse graphMouse;
 
-    public PositionPanel(GrapherPanel grapherPanel, GraphMouse graphMouse) {
-        this.grapherPanel = grapherPanel;
-        this.graphMouse = graphMouse;
+    public PositionPanel(GraphMouse graphMouse) {
         // Initialize panel
         this.setBackground(OptionalSettings.getMainColor());
         this.setLayout(new FlowLayout());

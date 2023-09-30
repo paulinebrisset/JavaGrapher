@@ -23,7 +23,7 @@ public class GuiGrapher extends JFrame {
 
         grapherPanel = new GrapherPanel();
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
-        positionPanel = new PositionPanel(grapherPanel, graphMouse);
+        positionPanel = new PositionPanel(graphMouse);
         actionPanel = new ActionPanel(grapherPanel);
         evalPanel = new EvalPanel();
         rightPanel = new JPanel();

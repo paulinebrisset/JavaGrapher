@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Panel for the user to set the grapher grid caracteristics
+ * Panel for the user to set the grapher grid characteristics
  */
 public class ActionPanel extends JPanel {
     private JTextField xminField;
@@ -30,15 +30,13 @@ public class ActionPanel extends JPanel {
 
         // Define label texts and corresponding fields
         String[] labelTexts = { "xmin:", "xmax:", "ymin:", "ymax:", "step:", "x grid:", "y grid:" };
-        JTextField[] textFields = {
-                new JTextField(String.valueOf(grapherPanel.minX)),
-                new JTextField(String.valueOf(grapherPanel.maxX)),
-                new JTextField(String.valueOf(grapherPanel.minY)),
-                new JTextField(String.valueOf(grapherPanel.maxY)),
-                new JTextField(String.valueOf(grapherPanel.step)),
-                new JTextField(String.valueOf(grapherPanel.gridX)),
-                new JTextField(String.valueOf(grapherPanel.gridY))
-        };
+        xminField = new JTextField(String.valueOf(grapherPanel.getMinX()));
+        xmaxField = new JTextField(String.valueOf(grapherPanel.getMaxX()));
+        yminField = new JTextField(String.valueOf(grapherPanel.getMinY()));
+        ymaxField = new JTextField(String.valueOf(grapherPanel.getMaxY()));
+        stepField = new JTextField(String.valueOf(grapherPanel.getStep()));
+        xGridField = new JTextField(String.valueOf(grapherPanel.getGridX()));
+        yGridField = new JTextField(String.valueOf(grapherPanel.getGridY()));
 
         // Create labels and add them along with their text fields
         GridBagConstraints constraint = new GridBagConstraints();
@@ -52,10 +50,13 @@ public class ActionPanel extends JPanel {
             add(label, constraint);
 
             constraint.gridx = 1;
-            textFields[i].setPreferredSize(new Dimension(100, 20)); // Set preferred size with a lower height
-            textFields[i].setBackground(OptionalSettings.getLabelForegroundColor());
-
-            add(textFields[i], constraint);
+            JTextField textField = i == 0 ? xminField
+                    : i == 1 ? xmaxField
+                            : i == 2 ? yminField
+                                    : i == 3 ? ymaxField : i == 4 ? stepField : i == 5 ? xGridField : yGridField;
+            textField.setPreferredSize(new Dimension(100, 20)); // Set preferred size with a lower height
+            textField.setBackground(OptionalSettings.getLabelForegroundColor());
+            add(textField, constraint);
 
             constraint.gridx = 0;
             constraint.gridy++;
@@ -67,7 +68,7 @@ public class ActionPanel extends JPanel {
         constraint.gridx = 1;
         constraint.gridwidth = 2; // Span two columns for the button
         add(refreshButton, constraint);
-
+        // FIXME
         // Add action listener to the refresh button
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -95,7 +96,6 @@ public class ActionPanel extends JPanel {
             grapherPanel.setStep(step);
             grapherPanel.setGridX(xGrid);
             grapherPanel.setGridY(yGrid);
-            // TODO FIXME
             grapherPanel.repaint(); // Redraw the GrapherPanel
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter numeric values.", "Error",
