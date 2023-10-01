@@ -135,7 +135,7 @@ public class GrapherPanel extends JPanel {
          * Cast to Graphics2D
          */
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(ColorPalette.getButtonsColor());
+        g2d.setColor(ColorPalette.getSecondColor());
         g2d.setStroke(new BasicStroke(3));
 
         int prevX = -1; // Previous X coordinate (initialized to an invalid value)
@@ -157,6 +157,15 @@ public class GrapherPanel extends JPanel {
             prevX = screenX;
             prevY = screenY;
         }
+    }
+
+    // Zoom
+    public void actionZoomIn() {
+        System.out.println("ZOOM IN");
+    }
+
+    public void actionZoomOut() {
+        System.out.println("ZOOM OUT");
     }
 
     // GETTERS

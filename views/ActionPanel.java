@@ -21,12 +21,20 @@ public class ActionPanel extends JPanel {
     private JTextField yGridField;
     private JButton refreshButton;
     private JButton clearButton;
+    private JCheckBox autostepCheckbox;
+    private JButton zoomInButton;
+    private JButton zoomOutButton;
 
     private GrapherPanel grapherPanel;
     private ActionListener clearListener;
+    private ActionListener zoomListener;
 
-    public ActionPanel(GrapherPanel grapherPanel, ActionListener refreshListener, ActionListener clearListener) {
+    private ActionListener refreshListener;
+
+    public ActionPanel(GrapherPanel grapherPanel, ActionListener refreshListener, ActionListener clearListener,
+            ActionListener zoomListener) {
         this.clearListener = clearListener;
+        this.refreshListener = refreshListener;
         this.setBackground(ColorPalette.getSecondColor());
         this.setLayout(new GridBagLayout());
         this.grapherPanel = grapherPanel;
@@ -60,15 +68,57 @@ public class ActionPanel extends JPanel {
             textField.setPreferredSize(new Dimension(100, 20)); // Set preferred size with a lower height
             textField.setBackground(ColorPalette.getLabelForegroundColor());
             add(textField, constraint);
-
             constraint.gridx = 0;
             constraint.gridy++;
         }
 
+        // Create the autostep checkbox
+        autostepCheckbox = new JCheckBox("Auto Step");
+        autostepCheckbox.setBackground(ColorPalette.getSecondColor());
+        autostepCheckbox.setSelected(false); // Initialize to unchecked
+        constraint.gridx = 1;
+        constraint.gridy++;
+        constraint.gridwidth = 2;
+        add(autostepCheckbox, constraint);
+
+        // Create the zoom in button
+        zoomInButton = new JButton("Zoom In");
+        zoomInButton.setBackground(ColorPalette.getButtonsColor());
+        constraint.gridx = 0;
+        constraint.gridy++;
+        constraint.gridwidth = 1;
+        add(zoomInButton, constraint);
+        zoomInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Raise an ActionEvent for zoom in
+                if (zoomListener != null) {
+                    zoomListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "ZoomIn"));
+                }
+            }
+        });
+
+        // Create the zoom out button
+        zoomOutButton = new JButton("Zoom Out");
+        zoomOutButton.setBackground(ColorPalette.getButtonsColor());
+        constraint.gridx = 1;
+        constraint.gridwidth = 1;
+        add(zoomOutButton, constraint);
+        zoomOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Raise an ActionEvent for zoom out
+                if (zoomListener != null) {
+                    zoomListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "ZoomOut"));
+                }
+            }
+        });
+
         // Create the refresh button
         refreshButton = new JButton("Refresh");
         refreshButton.setBackground(ColorPalette.getButtonsColor());
-        constraint.gridx = 1;
+        constraint.gridx = 0;
+        constraint.gridy++;
         constraint.gridwidth = 2;
         add(refreshButton, constraint);
         // Add action listener to the refresh button
@@ -82,8 +132,9 @@ public class ActionPanel extends JPanel {
         // Create the clear button
         clearButton = new JButton("Clear");
         clearButton.setBackground(ColorPalette.getButtonsColor());
-        constraint.gridx = 1; // Reset gridx to 0 to place in the first column
-        constraint.gridy++; // Move to the next row
+
+        // Move to the next row
+        constraint.gridx = 1;
         constraint.gridwidth = 2;
         add(clearButton, constraint);
         // Add action listener to the refresh button
@@ -102,30 +153,9 @@ public class ActionPanel extends JPanel {
         }
     }
 
-    private void refreshGrapherPanel() {
-        // TODO déménager tout le monde dans GrapherPanel
-        // Get the values from the text fields and update the GrapherPanel
-        try {
-            float xmin = xminField.getText().isEmpty() ? grapherPanel.getMinX() : Float.parseFloat(xminField.getText());
-            float xmax = xmaxField.getText().isEmpty() ? grapherPanel.getMaxX() : Float.parseFloat(xmaxField.getText());
-            float ymin = yminField.getText().isEmpty() ? grapherPanel.getMinY() : Float.parseFloat(yminField.getText());
-            float ymax = ymaxField.getText().isEmpty() ? grapherPanel.getMaxY() : Float.parseFloat(ymaxField.getText());
-            float step = stepField.getText().isEmpty() ? grapherPanel.getStep() : Float.parseFloat(stepField.getText());
-            float xGrid = xGridField.getText().isEmpty() ? grapherPanel.getGridX()
-                    : Float.parseFloat(xGridField.getText());
-            float yGrid = yGridField.getText().isEmpty() ? grapherPanel.getGridY()
-                    : Float.parseFloat(yGridField.getText());
-
-            grapherPanel.setMinMaxX(xmin, xmax);
-            grapherPanel.setMinMaxY(ymin, ymax);
-            grapherPanel.setStep(step);
-            grapherPanel.setGridX(xGrid);
-            grapherPanel.setGridY(yGrid);
-            // todo faire un recompute de la méthode et passer par GUI
-            grapherPanel.repaint(); // Redraw the GrapherPanel
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid input. Please enter numeric values.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+    public void refreshGrapherPanel() {
+        if (refreshListener != null) {
+            refreshListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Refresh"));
         }
     }
 
@@ -156,5 +186,9 @@ public class ActionPanel extends JPanel {
 
     public String getYGridField() {
         return yGridField.getText();
+    }
+
+    public boolean getAutoStep() {
+        return autostepCheckbox.isSelected();
     }
 }

@@ -41,11 +41,21 @@ public class GuiGrapher extends JFrame {
                 }
             }
         };
+        ActionListener zoomListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("ZoomIn".equals(e.getActionCommand())) {
+                    handleBtnZoomInClick();
+                } else if ("ZoomOut".equals(e.getActionCommand())) {
+                    handleBtnZoomOutClick();
+                }
+            }
+        };
         // Initialization of elements:
         grapherPanel = new GrapherPanel();
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
         positionPanel = new PositionPanel(graphMouse);
-        actionPanel = new ActionPanel(grapherPanel, refreshListener, clearListener);
+        actionPanel = new ActionPanel(grapherPanel, refreshListener, clearListener, zoomListener);
 
         // Create an ActionListener for the "Submit" button
         ActionListener submitListener = new ActionListener() {
@@ -72,6 +82,14 @@ public class GuiGrapher extends JFrame {
         content.add(grapherPanel, BorderLayout.CENTER);
         content.add(evalPanel, BorderLayout.SOUTH);
         this.setVisible(true);
+    }
+
+    public void handleBtnZoomInClick() {
+        this.grapherPanel.actionZoomIn();
+    }
+
+    public void handleBtnZoomOutClick() {
+        this.grapherPanel.actionZoomOut();
     }
 
     public void handleBtnClearClick() {
@@ -107,7 +125,6 @@ public class GuiGrapher extends JFrame {
             grapherPanel.setStep(step);
             grapherPanel.setGridX(xGrid);
             grapherPanel.setGridY(yGrid);
-            // todo faire un recompute de la méthode et passer par GUI
             grapherPanel.repaint(); // Redraw the GrapherPanel
             // Apply expression is exists
             if (!expression.isEmpty()) {
