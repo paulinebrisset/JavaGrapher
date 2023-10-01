@@ -5,7 +5,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import settings.OptionalSettings;
+import settings.ColorPalette;
+import settings.GridSettings;
 
 /**
  * Graph zone itself
@@ -13,29 +14,45 @@ import settings.OptionalSettings;
 
 public class GrapherPanel extends JPanel {
 
-    protected float minX = -10;
-    protected float maxX = 10;
-    protected float minY = -10;
-    protected float maxY = 10;
-    protected float step = 0.05f;
-    // protected float step = 0.01f;
-    protected float rangeX = 0;
-    protected float rangeY = 0;
-    protected float Ox = 0;
-    protected float Oy = 0;
-    protected float gridX = 1.0f;
-    protected float gridY = 1.0f;
+    private float minX;
+    private float maxX;
+    private float minY;
+    private float maxY;
+    private float step;
+    private float rangeX;
+    private float rangeY;
+    private float Ox;
+    private float Oy;
+    private float gridX;
+    private float gridY;
+    private boolean autoStep;
+    private boolean drag;
+    private boolean checkedEval;
 
-    protected boolean autoStep = false;
-    protected boolean drag = false;
-    boolean checkedEval = false;
     private Map<Float, Float> xyPairs;
     protected ActionPanel actionPanel;
+
+    public GrapherPanel() {
+        this.minX = GridSettings.MIN_X;
+        this.maxX = GridSettings.MAX_X;
+        this.minY = GridSettings.MIN_Y;
+        this.maxY = GridSettings.MAX_Y;
+        this.step = GridSettings.STEP;
+        this.gridX = GridSettings.GRID_X;
+        this.gridY = GridSettings.GRID_Y;
+        this.rangeX = GridSettings.RANGE_X;
+        this.rangeY = GridSettings.RANGE_Y;
+        this.Ox = GridSettings.OX;
+        this.Oy = GridSettings.OY;
+        this.autoStep = GridSettings.AUTO_STEP;
+        this.drag = false;
+        this.checkedEval = false;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(OptionalSettings.getLabelForegroundColor());
+        g.setColor(ColorPalette.getLabelForegroundColor());
         g.fillRect(0, 0, getWidth(), getHeight());
         /* Relation between graphic size and screen size */
         if (!drag) {
@@ -118,7 +135,7 @@ public class GrapherPanel extends JPanel {
          * Cast to Graphics2D
          */
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(OptionalSettings.getButtonsColor());
+        g2d.setColor(ColorPalette.getButtonsColor());
         g2d.setStroke(new BasicStroke(3));
 
         int prevX = -1; // Previous X coordinate (initialized to an invalid value)
@@ -235,5 +252,10 @@ public class GrapherPanel extends JPanel {
 
     public void setcheckedEval(boolean checkedEval) {
         this.checkedEval = checkedEval;
+    }
+
+    // TODO use it
+    public void setAutoStep(boolean autoStep) {
+        this.autoStep = autoStep;
     }
 }

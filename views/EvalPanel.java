@@ -1,6 +1,6 @@
 package views;
 
-import settings.OptionalSettings;
+import settings.ColorPalette;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,7 +19,7 @@ public class EvalPanel extends JPanel {
 
     public EvalPanel(ActionListener submitListener) {
         this.submitListener = submitListener;
-        this.setBackground(OptionalSettings.getMainColor());
+        this.setBackground(ColorPalette.getMainColor());
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         btnSubmit = new JButton("Submit");
@@ -27,13 +27,13 @@ public class EvalPanel extends JPanel {
 
         JPanel inputFunction = new JPanel();
         inputFunction.setLayout(new GridBagLayout());
-        inputFunction.setBackground(OptionalSettings.getMainColor());
+        inputFunction.setBackground(ColorPalette.getMainColor());
         GridBagConstraints constraint = new GridBagConstraints();
 
-        btnSubmit.setBackground(OptionalSettings.getButtonsColor());
+        btnSubmit.setBackground(ColorPalette.getButtonsColor());
         btnSubmit.setUI((ButtonUI) MetalButtonUI.createUI(btnSubmit)); // pour mettre la couleur de fond du bouton
         txtFunction.setPreferredSize(new Dimension(200, 24));
-        txtFunction.setBackground(OptionalSettings.getLabelForegroundColor());
+        txtFunction.setBackground(ColorPalette.getLabelForegroundColor());
 
         constraint.ipadx = 5;
         constraint.ipady = 5;

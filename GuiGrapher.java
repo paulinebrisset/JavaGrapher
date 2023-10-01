@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 import Eval.*;
-import settings.OptionalSettings;
+import settings.ColorPalette;
 import views.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -58,13 +58,13 @@ public class GuiGrapher extends JFrame {
             }
         };
 
-        evalPanel = new EvalPanel(submitListener); // Pass the submitListener to EvalPanel
+        evalPanel = new EvalPanel(submitListener);
         rightPanel = new JPanel();
-        rightPanel.setBackground(OptionalSettings.getSecondColor());
+        rightPanel.setBackground(ColorPalette.getSecondColor());
 
         // Build the whole panel
         Container content = this.getContentPane();
-        content.setBackground(OptionalSettings.getLabelForegroundColor());
+        content.setBackground(ColorPalette.getLabelForegroundColor());
         content.setLayout(new BorderLayout());
         content.add(rightPanel, BorderLayout.EAST);
         content.add(positionPanel, BorderLayout.NORTH);

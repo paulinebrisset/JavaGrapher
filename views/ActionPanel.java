@@ -2,7 +2,7 @@ package views;
 
 import javax.swing.*;
 
-import settings.OptionalSettings;
+import settings.ColorPalette;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +27,7 @@ public class ActionPanel extends JPanel {
 
     public ActionPanel(GrapherPanel grapherPanel, ActionListener refreshListener, ActionListener clearListener) {
         this.clearListener = clearListener;
-        this.setBackground(OptionalSettings.getSecondColor());
+        this.setBackground(ColorPalette.getSecondColor());
         this.setLayout(new GridBagLayout());
         this.grapherPanel = grapherPanel;
 
@@ -58,7 +58,7 @@ public class ActionPanel extends JPanel {
                             : i == 2 ? yminField
                                     : i == 3 ? ymaxField : i == 4 ? stepField : i == 5 ? xGridField : yGridField;
             textField.setPreferredSize(new Dimension(100, 20)); // Set preferred size with a lower height
-            textField.setBackground(OptionalSettings.getLabelForegroundColor());
+            textField.setBackground(ColorPalette.getLabelForegroundColor());
             add(textField, constraint);
 
             constraint.gridx = 0;
@@ -67,7 +67,7 @@ public class ActionPanel extends JPanel {
 
         // Create the refresh button
         refreshButton = new JButton("Refresh");
-        refreshButton.setBackground(OptionalSettings.getButtonsColor());
+        refreshButton.setBackground(ColorPalette.getButtonsColor());
         constraint.gridx = 1;
         constraint.gridwidth = 2;
         add(refreshButton, constraint);
@@ -81,7 +81,7 @@ public class ActionPanel extends JPanel {
 
         // Create the clear button
         clearButton = new JButton("Clear");
-        clearButton.setBackground(OptionalSettings.getButtonsColor());
+        clearButton.setBackground(ColorPalette.getButtonsColor());
         constraint.gridx = 1; // Reset gridx to 0 to place in the first column
         constraint.gridy++; // Move to the next row
         constraint.gridwidth = 2;

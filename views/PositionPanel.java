@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import settings.OptionalSettings;
+import settings.ColorPalette;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,7 +20,7 @@ public class PositionPanel extends JPanel {
 
     public PositionPanel(GraphMouse graphMouse) {
         // Initialize panel
-        this.setBackground(OptionalSettings.getMainColor());
+        this.setBackground(ColorPalette.getMainColor());
         this.setLayout(new FlowLayout());
 
         // 'x'
@@ -57,7 +57,7 @@ public class PositionPanel extends JPanel {
         JTextField textField = new JTextField("");
         textField.setEditable(false);
         textField.setPreferredSize(new Dimension(80, 24));
-        textField.setBackground(OptionalSettings.getLabelForegroundColor());
+        textField.setBackground(ColorPalette.getLabelForegroundColor());
         return textField;
     }
 
