@@ -26,27 +26,15 @@ public class GuiGrapher extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1, 2));
-        ActionListener refreshListener = new ActionListener() {
+        ActionListener actionPanelListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if ("Refresh".equals(e.getActionCommand())) {
                     handleBtnSubmitClick();
                 }
-            }
-        };
-        ActionListener clearListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
                 if ("Clear".equals(e.getActionCommand())) {
                     handleBtnClearClick();
                 }
-            }
-        };
-        ActionListener zoomListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 if ("ZoomIn".equals(e.getActionCommand())) {
                     handleBtnZoomInClick();
                 } else if ("ZoomOut".equals(e.getActionCommand())) {
@@ -54,11 +42,19 @@ public class GuiGrapher extends JFrame {
                 }
             }
         };
+        ActionListener repaintListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("Repaint".equals(e.getActionCommand())) {
+                    updateActionPanelFields();
+                }
+            }
+        };
         // Initialization of elements:
-        grapherPanel = new GrapherPanel();
+        grapherPanel = new GrapherPanel(repaintListener);
         GraphMouse graphMouse = new GraphMouse(grapherPanel);
         positionPanel = new PositionPanel(graphMouse);
-        actionPanel = new ActionPanel(grapherPanel, refreshListener, clearListener, zoomListener);
+        actionPanel = new ActionPanel(grapherPanel, actionPanelListener);
 
         // Create an ActionListener for the "Submit" button
         ActionListener submitListener = new ActionListener() {
@@ -93,6 +89,13 @@ public class GuiGrapher extends JFrame {
 
     public void handleBtnZoomOutClick() {
         this.grapherPanel.actionZoomOut();
+    }
+
+    public void updateActionPanelFields() {
+        actionPanel.setXminField(grapherPanel.getMinX());
+        actionPanel.setXmaxField(grapherPanel.getMaxX());
+        actionPanel.setYminField(grapherPanel.getMinY());
+        actionPanel.setYmaxField(grapherPanel.getMaxY());
     }
 
     public void handleBtnClearClick() {

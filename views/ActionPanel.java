@@ -1,9 +1,7 @@
 package views;
 
 import javax.swing.*;
-
 import settings.ColorPalette;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,15 +24,10 @@ public class ActionPanel extends JPanel {
     private JButton zoomOutButton;
 
     private GrapherPanel grapherPanel;
-    private ActionListener clearListener;
-    private ActionListener zoomListener;
+    private ActionListener actionListener;
 
-    private ActionListener refreshListener;
-
-    public ActionPanel(GrapherPanel grapherPanel, ActionListener refreshListener, ActionListener clearListener,
-            ActionListener zoomListener) {
-        this.clearListener = clearListener;
-        this.refreshListener = refreshListener;
+    public ActionPanel(GrapherPanel grapherPanel, ActionListener actionListener) {
+        this.actionListener = actionListener;
         this.setBackground(ColorPalette.getSecondColor());
         this.setLayout(new GridBagLayout());
         this.grapherPanel = grapherPanel;
@@ -82,84 +75,49 @@ public class ActionPanel extends JPanel {
         add(autostepCheckbox, constraint);
 
         // Create the zoom in button
-        zoomInButton = new JButton("Zoom In");
-        zoomInButton.setBackground(ColorPalette.getButtonsColor());
+        zoomInButton = createButton("Zoom In", "ZoomIn");
         constraint.gridx = 0;
         constraint.gridy++;
         constraint.gridwidth = 1;
         add(zoomInButton, constraint);
-        zoomInButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Raise an ActionEvent for zoom in
-                if (zoomListener != null) {
-                    zoomListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "ZoomIn"));
-                }
-            }
-        });
 
         // Create the zoom out button
-        zoomOutButton = new JButton("Zoom Out");
-        zoomOutButton.setBackground(ColorPalette.getButtonsColor());
+        zoomOutButton = createButton("Zoom Out", "ZoomOut");
         constraint.gridx = 1;
         constraint.gridwidth = 1;
         add(zoomOutButton, constraint);
-        zoomOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Raise an ActionEvent for zoom out
-                if (zoomListener != null) {
-                    zoomListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "ZoomOut"));
-                }
-            }
-        });
 
         // Create the refresh button
-        refreshButton = new JButton("Refresh");
-        refreshButton.setBackground(ColorPalette.getButtonsColor());
+        refreshButton = createButton("Refresh", "Refresh");
         constraint.gridx = 0;
         constraint.gridy++;
         constraint.gridwidth = 2;
         add(refreshButton, constraint);
-        // Add action listener to the refresh button
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                refreshGrapherPanel();
-            }
-        });
 
         // Create the clear button
-        clearButton = new JButton("Clear");
-        clearButton.setBackground(ColorPalette.getButtonsColor());
-
-        // Move to the next row
+        clearButton = createButton("Clear", "Clear");
         constraint.gridx = 1;
         constraint.gridwidth = 2;
         add(clearButton, constraint);
-        // Add action listener to the refresh button
-        clearButton.addActionListener(new ActionListener() {
+    }
+
+    // Helper method to create a button and add action listener
+    private JButton createButton(String label, String command) {
+        JButton button = new JButton(label);
+        button.setBackground(ColorPalette.getButtonsColor());
+        button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actionClearGrapherPanel();
+                // Raise an ActionEvent with the specified command
+                if (actionListener != null) {
+                    actionListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, command));
+                }
             }
         });
+        return button;
     }
 
-    // Listener for click on submit
-    public void actionClearGrapherPanel() {
-        if (clearListener != null) {
-            clearListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Clear"));
-        }
-    }
-
-    public void refreshGrapherPanel() {
-        if (refreshListener != null) {
-            refreshListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Refresh"));
-        }
-    }
-
-    // Getters
+    // Getters for field values
     public String getXminField() {
         return xminField.getText();
     }
@@ -191,4 +149,34 @@ public class ActionPanel extends JPanel {
     public boolean getAutoStep() {
         return autostepCheckbox.isSelected();
     }
+
+    // Setters
+    public void setXminField(float x) {
+        this.xminField.setText(String.valueOf(x));
+    }
+
+    public void setXmaxField(float x) {
+        this.xmaxField.setText(String.valueOf(x));
+    }
+
+    public void setYminField(float y) {
+        this.yminField.setText(String.valueOf(y));
+    }
+
+    public void setYmaxField(float y) {
+        this.ymaxField.setText(String.valueOf(y));
+    }
+
+    public void setStepField(float step) {
+        this.stepField.setText(String.valueOf(step));
+    }
+
+    public void setXGridField(float xGrid) {
+        this.xGridField.setText(String.valueOf(xGrid));
+    }
+
+    public void setYGridField(float yGrid) {
+        this.yGridField.setText(String.valueOf(yGrid));
+    }
+
 }

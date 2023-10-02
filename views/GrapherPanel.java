@@ -1,10 +1,12 @@
 package views;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import settings.ColorPalette;
 import settings.GridSettings;
 
@@ -31,8 +33,10 @@ public class GrapherPanel extends JPanel {
 
     private Map<Float, Float> xyPairs;
     protected ActionPanel actionPanel;
+    private ActionListener repaintListener;
 
-    public GrapherPanel() {
+    public GrapherPanel(ActionListener repaintListener) {
+        this.repaintListener = repaintListener;
         this.minX = GridSettings.MIN_X;
         this.maxX = GridSettings.MAX_X;
         this.minY = GridSettings.MIN_Y;
@@ -47,6 +51,7 @@ public class GrapherPanel extends JPanel {
         this.autoStep = GridSettings.AUTO_STEP;
         this.drag = false;
         this.checkedEval = false;
+
     }
 
     @Override
@@ -159,6 +164,10 @@ public class GrapherPanel extends JPanel {
         maxY -= (maxY - minY) * 0.1f;
 
         repaint();
+        if (repaintListener != null) {
+            repaintListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Repaint"));
+
+        }
     }
 
     public void actionZoomOut() {
@@ -166,9 +175,11 @@ public class GrapherPanel extends JPanel {
         maxX += (maxX - minX) * 0.1f;
         minY -= (maxY - minY) * 0.1f;
         maxY += (maxY - minY) * 0.1f;
-
         repaint();
 
+        if (repaintListener != null) {
+            repaintListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Repaint"));
+        }
     }
 
     // GETTERS
