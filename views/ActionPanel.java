@@ -65,7 +65,7 @@ public class ActionPanel extends JPanel {
                     : i == 1 ? xmaxField
                             : i == 2 ? yminField
                                     : i == 3 ? ymaxField : i == 4 ? stepField : i == 5 ? xGridField : yGridField;
-            textField.setPreferredSize(new Dimension(100, 20)); // Set preferred size with a lower height
+            textField.setPreferredSize(new Dimension(100, 20));
             textField.setBackground(ColorPalette.getLabelForegroundColor());
             add(textField, constraint);
             constraint.gridx = 0;

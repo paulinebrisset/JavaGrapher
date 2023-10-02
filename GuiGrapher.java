@@ -1,6 +1,9 @@
 import javax.swing.*;
 
-import Eval.*;
+import Calculator.*;
+import Calculator.exception.DivisionByZeroException;
+import Calculator.exception.LogByZeroException;
+import Calculator.exception.SyntaxeErrorException;
 import settings.ColorPalette;
 import views.*;
 import java.awt.*;
@@ -126,28 +129,42 @@ public class GuiGrapher extends JFrame {
             grapherPanel.setGridX(xGrid);
             grapherPanel.setGridY(yGrid);
             grapherPanel.repaint(); // Redraw the GrapherPanel
-            // Apply expression is exists
-            if (!expression.isEmpty()) {
-                // Create a Map to store the x-y pairs
-                Map<Float, Float> xyPairs = new HashMap<>();
-                // Loop through the range of X values and evaluate the function for each X
-                for (float currentX = xmin; currentX <= xmax; currentX += step) {
-                    float y = EvaluatorProvisoire.randomFunctionResult(expression, currentX);
-                    xyPairs.put(currentX, y); // Store the x-y pair in the Map
+
+            // Create a Map to store the x-y pairs
+            Map<Float, Float> xyPairs = new HashMap<>();
+            // Loop through the range of X values and evaluate the function for each X
+            for (float currentX = xmin; currentX <= xmax; currentX += step) {
+                float y;
+                try {
+                    y = Calculator.evaluateExpression(expression, currentX);
+
+                } catch (NumberFormatException ex) {
+                    // Handle invalid inputs with a pop-up error message
+                    displayErrorMessage("Invalid input. Please enter numeric values.");
+                    return;
+                } catch (DivisionByZeroException ex) {
+                    displayErrorMessage("Division by zero error.");
+                    return;
+                } catch (LogByZeroException ex) {
+                    displayErrorMessage("Logarithm by zero error.");
+                    return;
                 }
-                this.grapherPanel.setcheckedEval(true);
-                this.grapherPanel.setxyPairs(xyPairs);
-                this.grapherPanel.repaint();
-            } else {
-                this.grapherPanel.setcheckedEval(false);
-                this.grapherPanel.unsetxyPairs();
+                xyPairs.put(currentX, y); // Store the x-y pair in the Map
             }
 
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid input. Please enter numeric values.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            // If no exceptions occurred, update the graph
+            this.grapherPanel.setcheckedEval(true);
+            this.grapherPanel.setxyPairs(xyPairs);
+            this.grapherPanel.repaint();
+        } catch (SyntaxeErrorException ex) {
+            // Handle SyntaxeErrorException with a pop-up error message
+            displayErrorMessage("Syntax Error: " + ex.getMessage());
         }
+    }
 
+    // Helper method to display error messages
+    private void displayErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String[] args) {

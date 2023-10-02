@@ -126,20 +126,16 @@ public class GrapherPanel extends JPanel {
     }
 
     // Method to draw a curve based on xyPairs
+    // Method to draw individual points based on xyPairs
     public void drawCurve(Graphics g, Map<Float, Float> xyPairs) {
         if (xyPairs == null || xyPairs.isEmpty()) {
             return;
         }
-        /*
-         * Style.
-         * Cast to Graphics2D
-         */
+
+        // Style
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(ColorPalette.getSecondColor());
-        g2d.setStroke(new BasicStroke(3));
-
-        int prevX = -1; // Previous X coordinate (initialized to an invalid value)
-        int prevY = -1; // Previous Y coordinate (initialized to an invalid value)
+        g2d.setStroke(new BasicStroke(5));
 
         for (Map.Entry<Float, Float> entry : xyPairs.entrySet()) {
             float x = entry.getKey();
@@ -149,23 +145,30 @@ public class GrapherPanel extends JPanel {
             int screenX = Math.round((x - minX) / rangeX);
             int screenY = Math.round((maxY - y) / rangeY);
 
-            if (prevX != -1 && prevY != -1) {
-                // Draw a line connecting the previous point to the current point
-                g2d.drawLine(prevX, prevY, screenX, screenY);
-            }
-
-            prevX = screenX;
-            prevY = screenY;
+            // Draw a point at the current coordinates
+            int pointSize = GridSettings.POINT_SIZE;
+            g2d.fillOval(screenX - pointSize / 2, screenY - pointSize / 2, pointSize, pointSize);
         }
     }
 
     // Zoom
     public void actionZoomIn() {
-        System.out.println("ZOOM IN");
+        minX += (maxX - minX) * 0.1f;
+        maxX -= (maxX - minX) * 0.1f;
+        minY += (maxY - minY) * 0.1f;
+        maxY -= (maxY - minY) * 0.1f;
+
+        repaint();
     }
 
     public void actionZoomOut() {
-        System.out.println("ZOOM OUT");
+        minX -= (maxX - minX) * 0.1f;
+        maxX += (maxX - minX) * 0.1f;
+        minY -= (maxY - minY) * 0.1f;
+        maxY += (maxY - minY) * 0.1f;
+
+        repaint();
+
     }
 
     // GETTERS
