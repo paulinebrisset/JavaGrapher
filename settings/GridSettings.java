@@ -17,6 +17,7 @@ public class GridSettings {
     public static final float OY = 0;
     public static final float GRID_X = 1.0f;
     public static final float GRID_Y = 1.0f;
-    public static final boolean AUTO_STEP = false;
+    public static final boolean IS_AUTO_STEP = false;
+    public static final float DEFAULT_AUTO_STEP = 140f;
     public static final int POINT_SIZE = 8;
 }

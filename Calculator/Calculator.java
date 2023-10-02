@@ -96,9 +96,9 @@ public class Calculator {
 
 			return result;
 		} catch (SyntaxeErrorException e) {
-			throw e; // Re-throw SyntaxeErrorException
+			throw e;
 		} catch (NumberFormatException e) {
-			throw e; // Re-throw NumberFormatException
+			throw e;
 		}
 	}
 

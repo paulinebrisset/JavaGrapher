@@ -96,6 +96,7 @@ public class GuiGrapher extends JFrame {
         actionPanel.setXmaxField(grapherPanel.getMaxX());
         actionPanel.setYminField(grapherPanel.getMinY());
         actionPanel.setYmaxField(grapherPanel.getMaxY());
+        actionPanel.setStepField(grapherPanel.getStep());
     }
 
     public void handleBtnClearClick() {
@@ -117,6 +118,7 @@ public class GuiGrapher extends JFrame {
             String stepStr = actionPanel.getStepField();
             String xGridStr = actionPanel.getXGridField();
             String yGridStr = actionPanel.getYGridField();
+            grapherPanel.setAutoStep(actionPanel.getAutoStep());
 
             float xmin = xminStr.isEmpty() ? grapherPanel.getMinX() : Float.parseFloat(xminStr);
             float xmax = xmaxStr.isEmpty() ? grapherPanel.getMaxX() : Float.parseFloat(xmaxStr);
@@ -131,34 +133,37 @@ public class GuiGrapher extends JFrame {
             grapherPanel.setStep(step);
             grapherPanel.setGridX(xGrid);
             grapherPanel.setGridY(yGrid);
-            grapherPanel.repaint(); // Redraw the GrapherPanel
-
+            // update step according to checkbox
+            step = grapherPanel.getStep();
+            actionPanel.setStepField(step);
+            // ADD if expression is not empty
             // Create a Map to store the x-y pairs
-            Map<Float, Float> xyPairs = new HashMap<>();
-            // Loop through the range of X values and evaluate the function for each X
-            for (float currentX = xmin; currentX <= xmax; currentX += step) {
-                float y;
-                try {
-                    y = Calculator.evaluateExpression(expression, currentX);
-
-                } catch (NumberFormatException ex) {
-                    // Handle invalid inputs with a pop-up error message
-                    displayErrorMessage("Invalid input. Please enter numeric values.");
-                    return;
-                } catch (DivisionByZeroException ex) {
-                    displayErrorMessage("Division by zero error.");
-                    return;
-                } catch (LogByZeroException ex) {
-                    displayErrorMessage("Logarithm by zero error.");
-                    return;
+            if (!expression.isEmpty()) {
+                Map<Float, Float> xyPairs = new HashMap<>();
+                // Loop through the range of X values and evaluate the function for each X
+                for (float currentX = xmin; currentX <= xmax; currentX += step) {
+                    float y;
+                    try {
+                        y = Calculator.evaluateExpression(expression, currentX);
+                    } catch (NumberFormatException ex) {
+                        // Handle invalid inputs with a pop-up error message
+                        displayErrorMessage("Invalid input. Please enter numeric values.");
+                        return;
+                    } catch (DivisionByZeroException ex) {
+                        displayErrorMessage("Division by zero error.");
+                        return;
+                    } catch (LogByZeroException ex) {
+                        displayErrorMessage("Logarithm by zero error.");
+                        return;
+                    }
+                    xyPairs.put(currentX, y); // Store the x-y pair in the Map
                 }
-                xyPairs.put(currentX, y); // Store the x-y pair in the Map
-            }
 
-            // If no exceptions occurred, update the graph
-            this.grapherPanel.setcheckedEval(true);
-            this.grapherPanel.setxyPairs(xyPairs);
-            this.grapherPanel.repaint();
+                // If no exceptions occurred, update the graph
+                this.grapherPanel.setcheckedEval(true);
+                this.grapherPanel.setxyPairs(xyPairs);
+                this.grapherPanel.repaint();
+            }
         } catch (SyntaxeErrorException ex) {
             // Handle SyntaxeErrorException with a pop-up error message
             displayErrorMessage("Syntax Error: " + ex.getMessage());

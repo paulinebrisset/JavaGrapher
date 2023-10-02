@@ -48,7 +48,7 @@ public class GrapherPanel extends JPanel {
         this.rangeY = GridSettings.RANGE_Y;
         this.Ox = GridSettings.OX;
         this.Oy = GridSettings.OY;
-        this.autoStep = GridSettings.AUTO_STEP;
+        this.autoStep = GridSettings.IS_AUTO_STEP;
         this.drag = false;
         this.checkedEval = false;
 
@@ -167,7 +167,7 @@ public class GrapherPanel extends JPanel {
         rangeY = GridSettings.RANGE_Y;
         Ox = GridSettings.OX;
         Oy = GridSettings.OY;
-        autoStep = GridSettings.AUTO_STEP;
+        autoStep = GridSettings.IS_AUTO_STEP;
         drag = false;
         checkedEval = false;
         repaint();
@@ -250,7 +250,11 @@ public class GrapherPanel extends JPanel {
         return minX;
     }
 
+    // Take into account if autoStep is checked
     public float getStep() {
+        if (this.autoStep) {
+            step = (maxX - minX) / GridSettings.DEFAULT_AUTO_STEP;
+        }
         return step;
     }
 
@@ -297,7 +301,6 @@ public class GrapherPanel extends JPanel {
         this.checkedEval = checkedEval;
     }
 
-    // TODO use it
     public void setAutoStep(boolean autoStep) {
         this.autoStep = autoStep;
     }
