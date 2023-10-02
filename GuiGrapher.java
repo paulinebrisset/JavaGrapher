@@ -102,8 +102,8 @@ public class GuiGrapher extends JFrame {
         this.grapherPanel.setcheckedEval(false);
         // TODO Fix it still display f(x)
         this.grapherPanel.unsetxyPairs();
-        this.grapherPanel.repaint();
         this.evalPanel.clearFunction();
+        this.grapherPanel.clearGraph();
     }
 
     public void handleBtnSubmitClick() {

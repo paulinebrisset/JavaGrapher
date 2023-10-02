@@ -131,7 +131,6 @@ public class GrapherPanel extends JPanel {
     }
 
     // Method to draw a curve based on xyPairs
-    // Method to draw individual points based on xyPairs
     public void drawCurve(Graphics g, Map<Float, Float> xyPairs) {
         if (xyPairs == null || xyPairs.isEmpty()) {
             return;
@@ -153,6 +152,27 @@ public class GrapherPanel extends JPanel {
             // Draw a point at the current coordinates
             int pointSize = GridSettings.POINT_SIZE;
             g2d.fillOval(screenX - pointSize / 2, screenY - pointSize / 2, pointSize, pointSize);
+        }
+    }
+
+    public void clearGraph() {
+        minX = GridSettings.MIN_X;
+        maxX = GridSettings.MAX_X;
+        minY = GridSettings.MIN_Y;
+        maxY = GridSettings.MAX_Y;
+        step = GridSettings.STEP;
+        gridX = GridSettings.GRID_X;
+        gridY = GridSettings.GRID_Y;
+        rangeX = GridSettings.RANGE_X;
+        rangeY = GridSettings.RANGE_Y;
+        Ox = GridSettings.OX;
+        Oy = GridSettings.OY;
+        autoStep = GridSettings.AUTO_STEP;
+        drag = false;
+        checkedEval = false;
+        repaint();
+        if (repaintListener != null) {
+            repaintListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Repaint"));
         }
     }
 
