@@ -146,8 +146,7 @@ public class GuiGrapher extends JFrame {
                     try {
                         y = Calculator.evaluateExpression(expression, currentX);
                     } catch (NumberFormatException ex) {
-                        // Handle invalid inputs with a pop-up error message
-                        displayErrorMessage("Invalid input. Please enter numeric values.");
+                        displayErrorMessage("Your input could no be evaluated.");
                         return;
                     } catch (DivisionByZeroException ex) {
                         displayErrorMessage("Division by zero error.");
@@ -165,7 +164,6 @@ public class GuiGrapher extends JFrame {
                 this.grapherPanel.repaint();
             }
         } catch (SyntaxeErrorException ex) {
-            // Handle SyntaxeErrorException with a pop-up error message
             displayErrorMessage("Syntax Error: " + ex.getMessage());
         }
     }

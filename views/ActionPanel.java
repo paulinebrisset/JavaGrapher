@@ -23,14 +23,12 @@ public class ActionPanel extends JPanel {
     private JButton zoomInButton;
     private JButton zoomOutButton;
 
-    private GrapherPanel grapherPanel;
     private ActionListener actionListener;
 
     public ActionPanel(GrapherPanel grapherPanel, ActionListener actionListener) {
         this.actionListener = actionListener;
         this.setBackground(ColorPalette.getSecondColor());
         this.setLayout(new GridBagLayout());
-        this.grapherPanel = grapherPanel;
 
         // Define label texts and corresponding fields
         String[] labelTexts = { "xmin:", "xmax:", "ymin:", "ymax:", "step:", "x grid:", "y grid:" };
