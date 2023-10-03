@@ -42,11 +42,13 @@ public class GuiGrapher extends JFrame {
                 }
             }
         };
+        // Called when we just zommed out or generated a new graph
         ActionListener repaintListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ("Repaint".equals(e.getActionCommand())) {
                     updateActionPanelFields();
+                    handleBtnSubmitClick();
                 }
             }
         };
