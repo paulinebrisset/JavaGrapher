@@ -14,4 +14,10 @@ public class Exp extends UnaryNode {
 		return (float) Math.exp(this.childNode.eval(x));
 	}
 
+	@Override
+	public void buidTree() {
+		System.out.println("\t\tExp\n\t\t|");
+		this.childNode.buidTree();
+	}
+
 }

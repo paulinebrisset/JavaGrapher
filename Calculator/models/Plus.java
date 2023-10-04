@@ -16,4 +16,12 @@ public class Plus extends BinaryNode {
 		return this.leftNode.eval(x) + this.rightNode.eval(x);
 	}
 
+	@Override
+	public void buidTree() {
+		System.out.print("\t\t+\n\t/\t\\");
+		this.leftNode.buidTree();
+		System.out.print("\t\t\t\t");
+		this.rightNode.buidTree();
+	}
+
 }

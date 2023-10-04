@@ -14,4 +14,10 @@ public class Sin extends UnaryNode {
 		return (float) Math.sin(this.childNode.eval(x));
 	}
 
+	@Override
+	public void buidTree() {
+		System.out.println("\t\tSin\n\t\t|");
+		this.childNode.buidTree();
+	}
+
 }
