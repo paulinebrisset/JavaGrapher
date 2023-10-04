@@ -14,4 +14,9 @@ public class Constant extends Node {
 		// TODO Auto-generated method stub
 		return this.value;
 	}
+
+	@Override
+	public void buidTree() {
+		System.out.println(this.value);
+	}
 }

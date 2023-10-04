@@ -14,4 +14,10 @@ public class Cos extends UnaryNode {
 		return (float) Math.cos(this.childNode.eval(x));
 	}
 
+	@Override
+	public void buidTree() {
+		System.out.println("\t\tCos\n\t\t|");
+		this.childNode.buidTree();
+	}
+
 }

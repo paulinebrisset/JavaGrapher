@@ -17,4 +17,9 @@ public class Log extends UnaryNode {
 		return (float) Math.log(this.childNode.eval(x));
 	}
 
+	@Override
+	public void buidTree() {
+		System.out.println("\t\tLog\n\t\t|");
+		this.childNode.buidTree();
+	}  
 }

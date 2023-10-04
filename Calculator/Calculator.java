@@ -37,7 +37,6 @@ public class Calculator {
 				String id = "@" + i++;
 				String s3 = s.replace("(" + s2 + ")", id);
 				s = new String(s3);
-				System.out.println(s);
 			}
 			return analyse(s);
 		}
@@ -111,6 +110,7 @@ public class Calculator {
 			throws SyntaxeErrorException, DivisionByZeroException, LogByZeroException, NumberFormatException {
 		Node nd = analyse(expression);
 		float result = nd.eval(x);
+		nd.buidTree();
 
 		// Check for division by zero
 		if (nd instanceof Division && result == Float.POSITIVE_INFINITY) {

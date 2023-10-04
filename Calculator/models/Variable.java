@@ -10,4 +10,9 @@ public class Variable extends Node {
 		// TODO Auto-generated method stub
 		return x;
 	}
+
+	@Override
+	public void buidTree() {
+		System.out.print("x");
+	}
 }

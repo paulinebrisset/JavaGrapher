@@ -13,4 +13,10 @@ public class Tan extends UnaryNode {
 	public float eval(float x) throws DivisionByZeroException, LogByZeroException {
 		return (float) Math.tan(this.childNode.eval(x));
 	}
+
+	@Override
+	public void buidTree() {
+		System.out.println("\t\tTan\n\t\t|");
+		this.childNode.buidTree();
+	}
 }
