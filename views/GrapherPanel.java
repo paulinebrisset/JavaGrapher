@@ -245,7 +245,7 @@ public class GrapherPanel extends JPanel {
     }
 
     public boolean isData() {
-        return xyPairs != null && !xyPairs.isEmpty();
+        return xyPairs != null;
     }
 
     public Float getFxForX(float x) {

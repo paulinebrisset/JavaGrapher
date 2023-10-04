@@ -73,4 +73,8 @@ public class PositionPanel extends JPanel {
     public void setFX(float fx) {
         fxTextField.setText(String.valueOf(fx));
     }
+
+    public void emptyFx() {
+        fxTextField.setText("");
+    }
 }

@@ -44,9 +44,16 @@ public class GraphMouse extends MouseAdapter {
         boolean isData = grapherPanel.isData();
         if (isData) {
             mouseFx = grapherPanel.getFxForX(mouseX);
+            if (Float.isNaN(mouseFx)) {
+                mouseFx = 0;
+                propertyChangeSupport.firePropertyChange("mouseFx", null, mouseFx);
+            }
             if (!Float.isNaN(mouseFx)) {
                 propertyChangeSupport.firePropertyChange("mouseFx", null, mouseFx);
             }
+        } else if (mouseFx != 0) {
+            mouseFx = 0;
+            propertyChangeSupport.firePropertyChange("mouseFx", null, mouseFx);
         }
 
     }

@@ -106,6 +106,7 @@ public class GuiGrapher extends JFrame {
         this.grapherPanel.unsetxyPairs();
         this.evalPanel.clearFunction();
         this.grapherPanel.clearGraph();
+        positionPanel.emptyFx();
     }
 
     public void handleBtnSubmitClick() {

@@ -21,5 +21,5 @@ public class Log extends UnaryNode {
 	public void buidTree() {
 		// System.out.println("\t\tLog\n\t\t|");
 		this.childNode.buidTree();
-	}  
+	}
 }
