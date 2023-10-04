@@ -98,7 +98,6 @@ public class Calculator {
 		float x;
 		try {
 			x = (float) Float.parseFloat(s);
-			System.out.println(x);
 			return x;
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);

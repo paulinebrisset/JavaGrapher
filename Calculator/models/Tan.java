@@ -16,7 +16,7 @@ public class Tan extends UnaryNode {
 
 	@Override
 	public void buidTree() {
-		System.out.println("\t\tTan\n\t\t|");
+		// System.out.println("\t\tTan\n\t\t|");
 		this.childNode.buidTree();
 	}
 }

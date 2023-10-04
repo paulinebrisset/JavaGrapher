@@ -17,6 +17,6 @@ public class Constant extends Node {
 
 	@Override
 	public void buidTree() {
-		System.out.println(this.value);
+		// System.out.println(this.value);
 	}
 }

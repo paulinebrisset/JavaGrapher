@@ -19,7 +19,7 @@ public class Log extends UnaryNode {
 
 	@Override
 	public void buidTree() {
-		System.out.println("\t\tLog\n\t\t|");
+		// System.out.println("\t\tLog\n\t\t|");
 		this.childNode.buidTree();
 	}  
 }

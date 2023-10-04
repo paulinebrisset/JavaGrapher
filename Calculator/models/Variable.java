@@ -13,6 +13,6 @@ public class Variable extends Node {
 
 	@Override
 	public void buidTree() {
-		System.out.print("x");
+		// System.out.print("x");
 	}
 }

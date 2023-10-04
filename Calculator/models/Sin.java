@@ -16,7 +16,7 @@ public class Sin extends UnaryNode {
 
 	@Override
 	public void buidTree() {
-		System.out.println("\t\tSin\n\t\t|");
+		// System.out.println("\t\tSin\n\t\t|");
 		this.childNode.buidTree();
 	}
 

@@ -14,6 +14,6 @@ public class Node implements INode {
 	}
 
 	public void buidTree() {
-		System.out.println("Generic Tree");
+		// System.out.println("Generic Tree");
 	}
 }
