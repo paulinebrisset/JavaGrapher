@@ -102,10 +102,10 @@ public class GuiGrapher extends JFrame {
     }
 
     public void handleBtnClearClick() {
-        this.grapherPanel.setcheckedEval(false);
-        this.grapherPanel.unsetxyPairs();
-        this.evalPanel.clearFunction();
-        this.grapherPanel.clearGraph();
+        grapherPanel.setcheckedEval(false);
+        grapherPanel.unsetxyPairs();
+        evalPanel.clearFunction();
+        grapherPanel.clearGraph();
         positionPanel.emptyFx();
     }
 

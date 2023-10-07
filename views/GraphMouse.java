@@ -55,7 +55,6 @@ public class GraphMouse extends MouseAdapter {
             mouseFx = 0;
             propertyChangeSupport.firePropertyChange("mouseFx", null, mouseFx);
         }
-
     }
 
     // Add a property change listener to this instance
