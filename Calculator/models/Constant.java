@@ -11,12 +11,11 @@ public class Constant extends Node {
 
 	@Override
 	public float eval(float x) {
-		// TODO Auto-generated method stub
 		return this.value;
 	}
 
 	@Override
 	public void buidTree() {
-		// System.out.println(this.value);
+		System.out.println("\n"+this.value);
 	}
 }

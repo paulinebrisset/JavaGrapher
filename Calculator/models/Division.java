@@ -12,7 +12,6 @@ public class Division extends BinaryNode {
 
 	@Override
 	public float eval(float x) throws DivisionByZeroException, LogByZeroException {
-		// TODO Auto-generated method stub
 
 		// Trow divisionByZeroException
 		if (this.rightNode.eval(x) == 0)
@@ -22,9 +21,9 @@ public class Division extends BinaryNode {
 
 	@Override
 	public void buidTree() {
-		// System.out.print("\t\t/\n\t/\t\\");;
+		System.out.println("\t/");
 		this.leftNode.buidTree();
-		// System.out.print("\t\t\t\t");
+		System.out.print("\t\t");
 		this.rightNode.buidTree();
 	}
 
