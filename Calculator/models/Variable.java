@@ -7,12 +7,11 @@ public class Variable extends Node {
 
 	@Override
 	public float eval(float x) {
-		// TODO Auto-generated method stub
 		return x;
 	}
 
 	@Override
 	public void buidTree() {
-		// System.out.print("x");
+		System.out.println("x");
 	}
 }

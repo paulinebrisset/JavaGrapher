@@ -16,7 +16,7 @@ public class Cos extends UnaryNode {
 
 	@Override
 	public void buidTree() {
-		System.out.println("\t\tCos\n\t\t|");
+		System.out.println("Cos");
 		this.childNode.buidTree();
 	}
 

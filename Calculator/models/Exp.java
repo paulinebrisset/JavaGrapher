@@ -16,7 +16,7 @@ public class Exp extends UnaryNode {
 
 	@Override
 	public void buidTree() {
-		// System.out.println("\t\tExp\n\t\t|");
+		System.out.println("\nExp\n|");
 		this.childNode.buidTree();
 	}
 

@@ -4,6 +4,7 @@ import Calculator.*;
 import Calculator.exception.DivisionByZeroException;
 import Calculator.exception.LogByZeroException;
 import Calculator.exception.SyntaxeErrorException;
+import Calculator.models.Node;
 import settings.ColorPalette;
 import views.*;
 import java.awt.*;
@@ -175,11 +176,15 @@ public class GuiGrapher extends JFrame {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SyntaxeErrorException, DivisionByZeroException, LogByZeroException {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new GuiGrapher();
             }
         });
+        //exemple pour l'évaluateur
+        Node nd = Calculator.analyse("cos(x)+x");
+		float result = nd.eval(2);
+		System.out.println("result: "+ result);
     }
 }
